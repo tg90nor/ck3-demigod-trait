@@ -1,0 +1,1305 @@
+@demigod_max_improve_traits_count = 5
+
+become_demigod_decision = {
+	ai_check_interval = 0
+	picture = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+
+	desc = become_demigod_decision_desc
+
+	selection_tooltip = become_demigod_decision_desc
+
+	is_shown = {
+		NOT = { has_trait = Demigod }
+	}
+
+	effect = {
+		add_trait = Demigod
+		remove_trait = lovers_pox # freebie
+		remove_trait = lunatic		# freebie
+		set_variable = {
+			name = demigod_ascencion_count
+			value = 1
+		}
+	}
+
+	cost = { piety = medium_piety_value }
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+demigod_ascend_decision = {
+	ai_check_interval = 0
+	picture = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+
+	desc = demigod_ascend_decision_desc
+
+	selection_tooltip = demigod_ascend_decision_desc
+
+	is_shown = {
+		has_trait = Demigod
+	}
+
+	is_valid = {
+		NOT = {
+			AND = {
+				has_trait = intellect_good_3
+				has_trait = physique_good_3
+				has_trait = beauty_good_3
+				OR = {
+					has_trait = education_diplomacy_4
+					has_trait = education_intrigue_4
+					has_trait = education_martial_4
+					has_trait = education_stewardship_4
+					has_trait = education_learning_4
+				}
+			}
+		}
+	}
+
+	effect = {
+		hidden_effect = {
+			change_variable = {
+				name = demigod_ascencion_count
+				add = 1
+			}
+			set_variable = {
+				name = demigod_traits_improved
+				value = 0
+			}
+			# remove lovers pox
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = lovers_pox
+				}
+				remove_trait = lovers_pox
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# remove lunatic
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = lunatic
+				}
+				remove_trait = lunatic
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# remove inbred
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = inbred
+				}
+				remove_trait = inbred
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# improve intellect
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = intellect_good_3 }
+				}
+				if = {
+					limit = { has_trait = dull }
+					remove_trait = dull
+				}
+				else_if = {
+					limit = { has_trait = intellect_bad_1 }
+					remove_trait = intellect_bad_1
+				}
+				else_if = {
+					limit = { has_trait = intellect_bad_2 }
+					remove_trait = intellect_bad_2
+					add_trait = intellect_bad_1
+				}
+				else_if = {
+					limit = { has_trait = intellect_bad_3 }
+					remove_trait = intellect_bad_3
+					add_trait = intellect_bad_2
+				}
+				else_if = {
+					limit = { has_trait = intellect_good_1 }
+					remove_trait = intellect_good_1
+					add_trait = intellect_good_2
+				}
+				else_if = {
+					limit = { has_trait = intellect_good_2 }
+					remove_trait = intellect_good_2
+					add_trait = intellect_good_3
+				}
+				else = {
+					add_trait = intellect_good_1
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# improve physique
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = physique_good_3 }
+				}
+				if = {
+					limit = { has_trait = weak }
+					remove_trait = weak
+				}
+				else_if = {
+					limit = { has_trait = spindly }
+					remove_trait = spindly
+				}
+				else_if = {
+					limit = { has_trait = physique_bad_1 }
+					remove_trait = physique_bad_1
+				}
+				else_if = {
+					limit = { has_trait = physique_bad_2 }
+					remove_trait = physique_bad_2
+					add_trait = physique_bad_1
+				}
+				else_if = {
+					limit = { has_trait = physique_bad_3 }
+					remove_trait = physique_bad_3
+					add_trait = physique_bad_2
+				}
+				else_if = {
+					limit = { has_trait = physique_good_1 }
+					remove_trait = physique_good_1
+					add_trait = physique_good_2
+				}
+				else_if = {
+					limit = { has_trait = physique_good_2 }
+					remove_trait = physique_good_2
+					add_trait = physique_good_3
+				}
+				else = {
+					add_trait = physique_good_1
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# improve beauty
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = beauty_good_3 }
+				}
+				if = {
+					limit = { has_trait = beauty_bad_1 }
+					remove_trait = beauty_bad_1
+				}
+				else_if = {
+					limit = { has_trait = beauty_bad_2 }
+					remove_trait = beauty_bad_2
+					add_trait = beauty_bad_1
+				}
+				else_if = {
+					limit = { has_trait = beauty_bad_3 }
+					remove_trait = beauty_bad_3
+					add_trait = beauty_bad_2
+				}
+				else_if = {
+					limit = { has_trait = beauty_good_1 }
+					remove_trait = beauty_good_1
+					add_trait = beauty_good_2
+				}
+				else_if = {
+					limit = { has_trait = beauty_good_2 }
+					remove_trait = beauty_good_2
+					add_trait = beauty_good_3
+				}
+				else = {
+					add_trait = beauty_good_1
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# TODO/WIP:improve education
+			# |- Intrigue
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					OR = {
+						has_trait = education_intrigue_1
+						has_trait = education_intrigue_2
+						has_trait = education_intrigue_3
+					}
+				}
+				if = {
+					limit = {
+						has_trait = education_intrigue_1
+					}
+					remove_trait = education_intrigue_1
+					add_trait = education_intrigue_2
+				}
+				else_if = {
+					limit = {
+						has_trait = education_intrigue_2
+					}
+					remove_trait = education_intrigue_2
+					add_trait = education_intrigue_3
+				}
+				else_if = {
+					limit = {
+						has_trait = education_intrigue_3
+					}
+					remove_trait = education_intrigue_3
+					add_trait = education_intrigue_4
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# |- Diplomacy
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					OR = {
+						has_trait = education_diplomacy_1
+						has_trait = education_diplomacy_2
+						has_trait = education_diplomacy_3
+					}
+				}
+				if = {
+					limit = {
+						has_trait = education_diplomacy_1
+					}
+					remove_trait = education_diplomacy_1
+					add_trait = education_diplomacy_2
+				}
+				else_if = {
+					limit = {
+						has_trait = education_diplomacy_2
+					}
+					remove_trait = education_diplomacy_2
+					add_trait = education_diplomacy_3
+				}
+				else_if = {
+					limit = {
+						has_trait = education_diplomacy_3
+					}
+					remove_trait = education_diplomacy_3
+					add_trait = education_diplomacy_4
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# |- Stewardship
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					OR = {
+						has_trait = education_stewardship_1
+						has_trait = education_stewardship_2
+						has_trait = education_stewardship_3
+					}
+				}
+				if = {
+					limit = {
+						has_trait = education_stewardship_1
+					}
+					remove_trait = education_stewardship_1
+					add_trait = education_stewardship_2
+				}
+				else_if = {
+					limit = {
+						has_trait = education_stewardship_2
+					}
+					remove_trait = education_stewardship_2
+					add_trait = education_stewardship_3
+				}
+				else_if = {
+					limit = {
+						has_trait = education_stewardship_3
+					}
+					remove_trait = education_stewardship_3
+					add_trait = education_stewardship_4
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# |- Martial
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					OR = {
+						has_trait = education_martial_1
+						has_trait = education_martial_2
+						has_trait = education_martial_3
+					}
+				}
+				if = {
+					limit = {
+						has_trait = education_martial_1
+					}
+					remove_trait = education_martial_1
+					add_trait = education_martial_2
+				}
+				else_if = {
+					limit = {
+						has_trait = education_martial_2
+					}
+					remove_trait = education_martial_2
+					add_trait = education_martial_3
+				}
+				else_if = {
+					limit = {
+						has_trait = education_martial_3
+					}
+					remove_trait = education_martial_3
+					add_trait = education_martial_4
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# |- Learning
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					OR = {
+						has_trait = education_learning_1
+						has_trait = education_learning_2
+						has_trait = education_learning_3
+					}
+				}
+				if = {
+					limit = {
+						has_trait = education_learning_1
+					}
+					remove_trait = education_learning_1
+					add_trait = education_learning_2
+				}
+				else_if = {
+					limit = {
+						has_trait = education_learning_2
+					}
+					remove_trait = education_learning_2
+					add_trait = education_learning_3
+				}
+				else_if = {
+					limit = {
+						has_trait = education_learning_3
+					}
+					remove_trait = education_learning_3
+					add_trait = education_learning_4
+				}
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# remove faith sins
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = lustful
+					faith = { trait_is_sin = lustful }
+				}
+				remove_trait = lustful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = chaste
+					faith = { trait_is_sin = chaste }
+				}
+				remove_trait = chaste
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = gluttonous
+					faith = { trait_is_sin = gluttonous }
+				}
+				remove_trait = gluttonous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = temperate
+					faith = { trait_is_sin = temperate }
+				}
+				remove_trait = temperate
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = greedy
+					faith = { trait_is_sin = greedy }
+				}
+				remove_trait = greedy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = generous
+					faith = { trait_is_sin = generous }
+				}
+				remove_trait = generous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = lazy
+					faith = { trait_is_sin = lazy }
+				}
+				remove_trait = lazy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = diligent
+					faith = { trait_is_sin = diligent }
+				}
+				remove_trait = diligent
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = wrathful
+					faith = { trait_is_sin = wrathful }
+				}
+				remove_trait = wrathful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = calm
+					faith = { trait_is_sin = calm }
+				}
+				remove_trait = calm
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = patient
+					faith = { trait_is_sin = patient }
+				}
+				remove_trait = patient
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = impatient
+					faith = { trait_is_sin = impatient }
+				}
+				remove_trait = impatient
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = arrogant
+					faith = { trait_is_sin = arrogant }
+				}
+				remove_trait = arrogant
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = humble
+					faith = { trait_is_sin = humble }
+				}
+				remove_trait = humble
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = deceitful
+					faith = { trait_is_sin = deceitful }
+				}
+				remove_trait = deceitful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = honest
+					faith = { trait_is_sin = honest }
+				}
+				remove_trait = honest
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = craven
+					faith = { trait_is_sin = craven }
+				}
+				remove_trait = craven
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = brave
+					faith = { trait_is_sin = brave }
+				}
+				remove_trait = brave
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = shy
+					faith = { trait_is_sin = shy }
+				}
+				remove_trait = shy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = gregarious
+					faith = { trait_is_sin = gregarious }
+				}
+				remove_trait = gregarious
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = ambitious
+					faith = { trait_is_sin = ambitious }
+				}
+				remove_trait = ambitious
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = content
+					faith = { trait_is_sin = content }
+				}
+				remove_trait = content
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = arbitrary
+					faith = { trait_is_sin = arbitrary }
+				}
+				remove_trait = arbitrary
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = just
+					faith = { trait_is_sin = just }
+				}
+				remove_trait = just
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = cynical
+					faith = { trait_is_sin = cynical }
+				}
+				remove_trait = cynical
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = zealous
+					faith = { trait_is_sin = zealous }
+				}
+				remove_trait = zealous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = paranoid
+					faith = { trait_is_sin = paranoid }
+				}
+				remove_trait = paranoid
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = trusting
+					faith = { trait_is_sin = trusting }
+				}
+				remove_trait = trusting
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = compassionate
+					faith = { trait_is_sin = compassionate }
+				}
+				remove_trait = compassionate
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = callous
+					faith = { trait_is_sin = callous }
+				}
+				remove_trait = callous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = sadistic
+					faith = { trait_is_sin = sadistic }
+				}
+				remove_trait = sadistic
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = stubborn
+					faith = { trait_is_sin = stubborn }
+				}
+				remove_trait = stubborn
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = fickle
+					faith = { trait_is_sin = fickle }
+				}
+				remove_trait = fickle
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = vengeful
+					faith = { trait_is_sin = vengeful }
+				}
+				remove_trait = vengeful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = forgiving
+					faith = { trait_is_sin = forgiving }
+				}
+				remove_trait = forgiving
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					has_trait = cannibal
+					faith = { trait_is_sin = cannibal }
+				}
+				remove_trait = cannibal
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			# add faith virtues
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = lustful }
+					faith = { trait_is_virtue = lustful }
+				}
+				add_trait = lustful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = chaste }
+					faith = { trait_is_virtue = chaste }
+				}
+				add_trait = chaste
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = gluttonous }
+					faith = { trait_is_virtue = gluttonous }
+				}
+				add_trait = gluttonous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = temperate }
+					faith = { trait_is_virtue = temperate }
+				}
+				add_trait = temperate
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = greedy }
+					faith = { trait_is_virtue = greedy }
+				}
+				add_trait = greedy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = generous }
+					faith = { trait_is_virtue = generous }
+				}
+				add_trait = generous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = lazy }
+					faith = { trait_is_virtue = lazy }
+				}
+				add_trait = lazy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = diligent }
+					faith = { trait_is_virtue = diligent }
+				}
+				add_trait = diligent
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = wrathful }
+					faith = { trait_is_virtue = wrathful }
+				}
+				add_trait = wrathful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = calm }
+					faith = { trait_is_virtue = calm }
+				}
+				add_trait = calm
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = patient }
+					faith = { trait_is_virtue = patient }
+				}
+				add_trait = patient
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = impatient }
+					faith = { trait_is_virtue = impatient }
+				}
+				add_trait = impatient
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = arrogant }
+					faith = { trait_is_virtue = arrogant }
+				}
+				add_trait = arrogant
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = humble }
+					faith = { trait_is_virtue = humble }
+				}
+				add_trait = humble
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = deceitful }
+					faith = { trait_is_virtue = deceitful }
+				}
+				add_trait = deceitful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = honest }
+					faith = { trait_is_virtue = honest }
+				}
+				add_trait = honest
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = craven }
+					faith = { trait_is_virtue = craven }
+				}
+				add_trait = craven
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = brave }
+					faith = { trait_is_virtue = brave }
+				}
+				add_trait = brave
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = shy }
+					faith = { trait_is_virtue = shy }
+				}
+				add_trait = shy
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = gregarious }
+					faith = { trait_is_virtue = gregarious }
+				}
+				add_trait = gregarious
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = ambitious }
+					faith = { trait_is_virtue = ambitious }
+				}
+				add_trait = ambitious
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = content }
+					faith = { trait_is_virtue = content }
+				}
+				add_trait = content
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = arbitrary }
+					faith = { trait_is_virtue = arbitrary }
+				}
+				add_trait = arbitrary
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = just }
+					faith = { trait_is_virtue = just }
+				}
+				add_trait = just
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = cynical }
+					faith = { trait_is_virtue = cynical }
+				}
+				add_trait = cynical
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = zealous }
+					faith = { trait_is_virtue = zealous }
+				}
+				add_trait = zealous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = paranoid }
+					faith = { trait_is_virtue = paranoid }
+				}
+				add_trait = paranoid
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = trusting }
+					faith = { trait_is_virtue = trusting }
+				}
+				add_trait = trusting
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = compassionate }
+					faith = { trait_is_virtue = compassionate }
+				}
+				add_trait = compassionate
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = callous }
+					faith = { trait_is_virtue = callous }
+				}
+				add_trait = callous
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = sadistic }
+					faith = { trait_is_virtue = sadistic }
+				}
+				add_trait = sadistic
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = stubborn }
+					faith = { trait_is_virtue = stubborn }
+				}
+				add_trait = stubborn
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = fickle }
+					faith = { trait_is_virtue = fickle }
+				}
+				add_trait = fickle
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = vengeful }
+					faith = { trait_is_virtue = vengeful }
+				}
+				add_trait = vengeful
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = forgiving }
+					faith = { trait_is_virtue = forgiving }
+				}
+				add_trait = forgiving
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					var:demigod_traits_improved < @demigod_max_improve_traits_count
+					NOT = { has_trait = cannibal }
+					faith = { trait_is_virtue = cannibal }
+				}
+				add_trait = cannibal
+				change_variable = {
+					name = demigod_traits_improved
+					add = 1
+				}
+			}
+		}
+		custom_tooltip = demigod_ascend_decision_effect_tooltip
+		custom_tooltip = demigod_ascend_decision_effect_tooltip_warning
+	}
+
+	cost = {
+		piety = {
+			value = massive_piety_value
+			multiply = {
+				value = var:demigod_ascencion_count
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

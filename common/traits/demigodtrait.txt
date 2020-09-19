@@ -1,0 +1,14 @@
+Demigod = {
+	index = 4200
+	stewardship = 15
+	diplomacy = 15
+	martial = 30
+	intrigue = 15
+	learning = 15
+	health = 0.5
+	stress_loss_mult = 0.5
+	stress_gain_mult = -0.3
+	monthly_lifestyle_xp_gain_mult = 0.4
+	monthly_prestige = 1.0
+	prowess = 10
+}

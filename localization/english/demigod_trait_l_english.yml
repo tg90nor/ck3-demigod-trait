@@ -1,0 +1,12 @@
+﻿l_english:
+ trait_Demigod:0 "Demigod"
+ trait_Demigod_desc:0 "This character is the descendant of a god."
+ trait_Demigod_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] is the descendant of a god."
+ become_demigod_decision:0 "Become a Demigod"
+ become_demigod_decision_desc:0 "Become a Demigod"
+ become_demigod_decision_confirm:0 "Ascend"
+ demigod_ascend_decision:0 "Improve traits"
+ demigod_ascend_decision_desc:0 "Improve your traits to become more divine"
+ demigod_ascend_decision_confirm:0 "Ascend"
+ demigod_ascend_decision_effect_tooltip:0 "Up to five times: Improve [congenital|E] or [education_traits|E], lose [sinful|E] traits or gain [virtuous|E] traits"
+ demigod_ascend_decision_effect_tooltip_warning:0 "Note: You still pay the full [piety|E] cost even if there are no traits to improve"
